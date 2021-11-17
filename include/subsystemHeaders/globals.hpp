@@ -19,6 +19,7 @@ extern pros::Motor mobileGoalBack;
 extern pros::Controller masterController;
 extern pros::Controller partnerController;
 
-extern pros::ADIDigitalIn mobileGoalLineTracker;
+//Sensors
+extern pros::Vision visionSensor;
 
 #endif

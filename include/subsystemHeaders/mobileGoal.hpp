@@ -3,18 +3,11 @@
 //Motor Values
 
 //Helper Functions
-void setFrontMobileGoalLift ();
-void setBackMobileGoalLift ();
+void setFrontMobileGoalLift (int value);
+void setBackMobileGoalLift(int value);
 
 //Lifter Functions
 void frontMobileGoalOperatorControl ();
 
-void backMobileGoalOperatorControl ();
+void mobileGoalLiftOperatorControl ();
 
-void mobileGoalFrontDown();
-
-void mobileGoalFrontUp();
-
-void mobileGoalBackUp();
-
-void mobileGoalDrop();

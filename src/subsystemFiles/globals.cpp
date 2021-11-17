@@ -15,5 +15,4 @@ pros::Controller masterController(pros::E_CONTROLLER_MASTER);
 pros::Controller partnerController(pros::E_CONTROLLER_PARTNER);
 
 //Sensors
-pros::ADIDigitalIn mobileGoalLineTracker('A');
-pros::ADIUltrasonic rightRangeFinder('B', 'C');
+pros::Vision visionSensor(20, pros::E_VISION_ZERO_CENTER);

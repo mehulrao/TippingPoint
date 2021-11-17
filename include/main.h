@@ -81,6 +81,7 @@ void opcontrol(void);
 #include "subsystemHeaders/mobileGoal.hpp"
 #include "subsystemHeaders/autonomous.hpp"
 #include "subsystemHeaders/autonomousSelection.hpp"
+#include "subsystemHeaders/visionSensor.hpp"
 #include "pros/apix.h"
 #include "pros/adi.h"
 

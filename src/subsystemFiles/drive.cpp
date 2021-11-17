@@ -6,34 +6,19 @@
 using namespace std;
 
 #define PI 3.1415926535
+#define CIRCUMFERANCE 20.4203522
 
-int currentAngle = 90;
-double currentY;
-double currentX;
 int leftDrive;
 int rightDrive;
 std::string directionText;
 bool reverseDrive = false;
-double arcRadius;
-int angleDifference;
-double leftArcRadius;
-double rightArcRadius;
-double leftArcCircumference;
-double rightArcCircumference;
-double leftArcLength;
-double rightArcLength;
-double leftArcTicks;
-double rightArcTicks;
-double arcTicks;
-double proportion;
-int xDifference;
-int yDifference;
-double distanceTicks;
-double driveDistance;
-int startAngle;
-double pointAngle;
-int leftValue;
-int rightValue;
+
+double currentX;
+double currentY;
+ double currentAngle = 90;
+ double proportion;
+ double leftArc;
+ double rightArc;
 
 //Helper Functions
 void setDrive (int left, int right){
@@ -52,10 +37,6 @@ void tareDrive (){
   driveRightFront.tare_position();
   driveRightCenter.tare_position();
   driveRightBack.tare_position();
-}
-
-void findInitialPosition (){
-
 }
 
 //Driver Functions
@@ -81,200 +62,45 @@ void driveControl () {
      rightDrive = masterController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) - masterController.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
    }
-   /**if (abs(masterController.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y)) <= 10 || abs(masterController.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X)) <=10){
-     setDrive(0, 0);
-   }*/
    setDrive(leftDrive, rightDrive);
 }
 
-void driveTo (int x, int y, double angle, std::string direction, std::string movementType){
+void driveTo (double x, double y, double finalAngle, int direction){
   tareDrive();
-  if (movementType == "odometry"){ //odometry movement
-    //determine arc
-    if (angle > currentAngle){
-      angleDifference = angle - currentAngle;
-    } else if (angle < currentAngle){
-      angleDifference = currentAngle - angle;
-    }
-    if (x > currentX){
-      xDifference = x - currentX;
-    } else {
-      xDifference = currentX - x;
-    }
-    if (y > currentY){
-      yDifference = y - currentY;
-    } else {
-      yDifference = currentY - y;
-    }
-    arcRadius = (sqrt(pow(xDifference, 2) + pow(yDifference, 2))) / sqrt(2 - (2 * cos(angleDifference * (PI / 180))));
-    if (direction == "forwards"){
-      if (angle > currentAngle){
-        leftArcRadius = arcRadius - 8.37;
-        rightArcRadius = arcRadius + 8.37;
-      } else {
-        leftArcRadius = arcRadius + 8.37;
-        rightArcRadius = arcRadius - 8.37;
-      }
-    } else {
-      if (angle > currentAngle){
-        leftArcRadius = arcRadius + 8.37;
-        rightArcRadius = arcRadius - 8.37;
-      } else {
-        leftArcRadius = arcRadius - 8.37;
-        rightArcRadius = arcRadius + 8.37;
-      }
-    }
-    leftArcCircumference = 2 * leftArcRadius * PI;
-    rightArcCircumference = 2 * rightArcRadius * PI;
+  double currentX;
+  double currentY;
+  double currentAngle;
 
-    leftArcLength = angleDifference * (leftArcCircumference / 360);
-    rightArcLength = angleDifference * (rightArcCircumference / 360);
-    std::string leftArcString = to_string(leftArcLength);
-    masterController.set_text(0, 0, leftArcString);
+  double xDiff = abs(currentX - x);
+  double yDiff = abs(currentY - y);
+  double angleDiff = abs(currentAngle - finalAngle);
 
-    leftArcTicks = (leftArcLength / (3.25 * PI)) * 360 * (5 / 3);
-    rightArcTicks = (rightArcLength / (3.25 * PI)) * 360 * (5 / 3);
+  double angleRads = angleDiff * (PI / 180);
+  double radius = (sqrt(pow(xDiff,2) + pow(yDiff,2)))/ sqrt(2 * (1-cos(angleRads)));
 
-    if (direction == "forwards"){
-      if (angle > currentAngle){
-        proportion = leftArcTicks / rightArcTicks;
-      } else {
-        proportion = rightArcTicks / leftArcTicks;
-      }
-    } else {
-      if (angle > currentAngle){
-        proportion = rightArcTicks / leftArcTicks;
-      } else {
-        proportion = leftArcTicks / rightArcTicks;
-      }
-    }
-    if (direction == "forwards"){
-      while ((driveLeftFront.get_position() < leftArcTicks) && (driveRightFront.get_position() < rightArcTicks)) {
-        if (angle > currentAngle){
-          setDrive(127 * proportion, 127);
-        } else {
-          setDrive(127, 127 * proportion);
-        }
-      }
-    } else {
-      while ((abs(driveLeftFront.get_position()) < leftArcTicks) && (abs(driveRightFront.get_position()) < rightArcTicks)) {
-        if (angle > currentAngle){
-            setDrive(-127, -127 * proportion);
-        } else {
-          setDrive(-127 * proportion, -127);
-        }
-      }
-    }
-    setDrive(0,0);
-  }  else if (movementType == "pivot"){ //pivot
-    tareDrive();
-    arcRadius = 8.37;
-    if (angle > currentAngle){
-      angleDifference = angle - currentAngle;
-      arcTicks = 2 * angleDifference * arcRadius / 3.25 * (5 / 3);
-      leftArcTicks = arcTicks * -1;
-      rightArcTicks = arcTicks;
-      while ((driveLeftFront.get_position() > leftArcTicks) && (driveRightFront.get_position() < rightArcTicks)){
-        setDrive(-100, 100);
-      }
-      setDrive(0,0);
-    } else {
-      angleDifference = currentAngle - angle;
-      arcTicks = 2 * angleDifference * arcRadius / 3.25 * (5 / 3);
-      leftArcTicks = arcTicks;
-      rightArcTicks = arcTicks * -1;
-      while ((driveLeftFront.get_position() < leftArcTicks) && (driveRightFront.get_position() > rightArcTicks)){
-        setDrive(100, -100);
-      }
-      setDrive(0,0);
-    }
-  } else if (movementType == "swing"){
-    if (angle > currentAngle){
-      angleDifference = angle - currentAngle;
-    } else {
-      angleDifference = currentAngle - angle;
-    }
-    arcTicks = angleDifference * 2 * 16.74 / 3.25 * (5 / 3);
-    if (angle > currentAngle){
-      while (driveRightFront.get_position() < arcTicks){
-        setDrive(0, 127);
-      }
-    } else {
-      while (driveLeftFront.get_position() < arcTicks){
-        setDrive(127, 0);
-      }
-    }
-  }
-  currentX = x;
-  currentY = y;
-  currentAngle = angle;
-}
-
-void linearDriveTo (int x, int y, int finishAngle, std::string turn1Type, std::string turn2Type, std::string direction){
-  if (x > currentX){
-    xDifference = x - currentX;
+  if (currentAngle > finalAngle && direction > 0 || currentAngle < finalAngle && direction < 0){
+    leftArc = (radius + 8.37) * angleRads;
+    rightArc = (radius - 8.37) * angleRads;
   } else {
-    xDifference = currentX - x;
+    leftArc = (radius - 8.37) * angleRads;
+    rightArc = (radius + 8.37) * angleRads;
   }
-  if (y > yDifference){
-    yDifference = y - currentY;
+
+  double leftArcTicks = ((leftArc / CIRCUMFERANCE) * (3 / 5)) * 900;
+  double rightArcTicks = ((leftArc /CIRCUMFERANCE) * (3 / 5)) * 900;
+
+  if (currentAngle > finalAngle && direction > 0 || currentAngle < finalAngle && direction < 0){
+    proportion = rightArcTicks / leftArcTicks;
   } else {
-    yDifference = currentY - y;
-  }
-  startAngle = atan(y / x);
-  if (currentAngle != startAngle){
-    driveTo(currentX, currentY, startAngle, direction, turn1Type);
-    currentAngle = startAngle;
+    proportion = leftArcTicks / rightArcTicks;
   }
 
-  tareDrive();
-
-  driveDistance = sqrt(pow(xDifference, 2) + pow(yDifference, 2));
-  distanceTicks = (driveDistance * 360) / (3.25 * PI) * (5 / 3);
-  while (distanceTicks < ((abs(driveLeftFront.get_position()) + abs(driveRightFront.get_position()) / 2))){
-    if (direction == "forward"){
-      setDrive(127, 127);
+  while (leftArcTicks < driveLeftFront.get_position() && rightArcTicks < driveRightFront.get_position()){
+    if (currentAngle > finalAngle && direction > 0 || currentAngle < finalAngle && direction < 0){
+      setDrive(127 * direction, 127 * proportion * direction);
     } else {
-      setDrive(-127, -127);
+      setDrive(127 * proportion * direction, 127 * direction);
     }
   }
-  tareDrive();
-
-  setDrive(0, 0);
-  if (currentAngle != finishAngle){
-    driveTo(x, y, finishAngle, direction, turn2Type);
-  }
-  currentX = x;
-  currentY = y;
-  currentAngle = finishAngle;
-}
-
-void turnToPoint (int x, int y){
-  pointAngle = atan(y/x);
-  driveTo(currentX, currentY, pointAngle, "forwards", "pivot");
-}
-
-void driveStraight (double distance, int direction, int power){
-  tareDrive();
-  distanceTicks = (distance / (3.25 * PI)) * 360 * (5 / 3);
-  while(driveLeftFront.get_position() < distanceTicks && distanceTicks > abs(driveRightFront.get_position())){
-    setDrive(power * direction, power * direction);
-  }
-  setDrive(0, 0);
-}
-
-void swingTurn (int angle, std::string side, int direction){
-  tareDrive();
-  arcTicks = angle * 2 * 16.74 / 3.25 * (5 / 3);
-  if (side == "right"){
-    rightValue = direction * 75;
-    leftValue = 0;
-  } else {
-    rightValue = 0;
-    leftValue = direction * 75;
-  }
-  while(abs(driveLeftFront.get_position()) < arcTicks && abs(driveRightFront.get_position()) < arcTicks){
-    setDrive(leftValue, rightValue);
-  }
-  setDrive(0, 0);
+  setDrive(0,0);
 }
