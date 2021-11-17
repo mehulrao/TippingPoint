@@ -3,20 +3,21 @@
 
 using namespace std;
 
-lv_obj_t * homeScreen = lv_obj_create(NULL, NULL);
+lv_obj_t *homeScreen = lv_obj_create(NULL, NULL);
 
-lv_obj_t * leftButton;
-lv_obj_t * rightButton;
+lv_obj_t *leftButton;
+lv_obj_t *rightButton;
 
-lv_obj_t * leftLabel;
-lv_obj_t * rightLabel;
+lv_obj_t *leftLabel;
+lv_obj_t *rightLabel;
 
-lv_obj_t * sideContainer;
-lv_obj_t * sideLabel;
-const char * side = "";
+lv_obj_t *sideContainer;
+lv_obj_t *sideLabel;
+const char *side = "";
 std::string sideString = "";
 
-void autonSelect(){
+void autonSelect()
+{
   lv_scr_load(homeScreen);
 
   leftButton = lv_btn_create(homeScreen, NULL);
@@ -38,14 +39,16 @@ void autonSelect(){
   lv_obj_set_pos(sideContainer, 215, 80);
 }
 
-static lv_res_t leftButtonPress(lv_obj_t * btn){
+static lv_res_t leftButtonPress(lv_obj_t *btn)
+{
   side = "left";
   sideString = "left";
   lv_label_set_text(sideLabel, side);
   return LV_RES_OK;
 }
 
-static lv_res_t rightButtonPress(lv_obj_t * btn){
+static lv_res_t rightButtonPress(lv_obj_t *btn)
+{
   side = "right";
   sideString = "right";
   lv_label_set_text(sideLabel, side);
