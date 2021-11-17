@@ -80,7 +80,7 @@ void opcontrol() {
 		//Drive Operator Control
 		driveControl();
 
-    frontMobileGoalOperatorControl ();
-    backMobileGoalOperatorControl();
+    	frontMobileGoalOperatorControl ();
+    	mobileGoalLiftOperatorControl();
 	}
 }
