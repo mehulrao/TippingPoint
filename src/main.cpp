@@ -6,7 +6,8 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
+void on_center_button()
+{
 }
 
 /**
@@ -15,8 +16,8 @@ void on_center_button() {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() {
-
+void initialize()
+{
 	driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	driveRightFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -24,7 +25,7 @@ void initialize() {
 	mobileGoalFront.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	mobileGoalBack.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	driveRightCenter.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-  driveLeftCenter.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	driveLeftCenter.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }
 
 /**
@@ -73,10 +74,12 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
+void opcontrol()
+{
 	masterController.clear_line(1);
 	partnerController.clear_line(1);
-	while (true){
+	while (true)
+	{
 		//Drive Operator Control
 		driveControl();
 

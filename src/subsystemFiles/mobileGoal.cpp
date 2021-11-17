@@ -3,21 +3,29 @@
 
 using namespace std;
 
-void setFrontMobileGoalLift (int value){
+void setFrontMobileGoalLift(int value)
+{
   mobileGoalFront = value;
 }
 
-void setBackMobileGoalLift (int value){
+void setBackMobileGoalLift(int value)
+{
   mobileGoalBack = value;
 }
 
-void frontMobileGoalOperatorControl (){
+void frontMobileGoalOperatorControl()
+{
   int mobileGoalValue;
-  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
+  {
     mobileGoalValue = 63;
-  } else if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+  }
+  else if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
+  {
     mobileGoalValue = -63;
-  } else {
+  }
+  else
+  {
     mobileGoalValue = 0;
   }
   setFrontMobileGoalLift(mobileGoalValue);

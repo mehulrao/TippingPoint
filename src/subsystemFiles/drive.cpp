@@ -21,7 +21,8 @@ double currentY;
  double rightArc;
 
 //Helper Functions
-void setDrive (int left, int right){
+void setDrive(int left, int right)
+{
   driveRightFront = right;
   driveRightBack = right;
   driveRightCenter = right;
@@ -30,7 +31,8 @@ void setDrive (int left, int right){
   driveLeftCenter = left;
 }
 
-void tareDrive (){
+void tareDrive()
+{
   driveLeftFront.tare_position();
   driveLeftCenter.tare_position();
   driveLeftBack.tare_position();

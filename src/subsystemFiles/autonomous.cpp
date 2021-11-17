@@ -1,6 +1,7 @@
 #include "main.h"
 
-void runLeftAuton (){
+void runLeftAuton()
+{
   mobileGoalFrontDown();
   driveStraight(18.5, 1, 127);
   pros::delay(100);
@@ -26,13 +27,14 @@ void runLeftAuton (){
   driveStraight(10, 1, 127);
 }
 
-void runRightAuton(){
+void runRightAuton()
+{
   mobileGoalFrontDown();
   driveStraight(10.5, 1, 75);
   pros::delay(100);
   mobileGoalFrontUp();
   pros::delay(100);
-  swingTurn (60, "right", 1);
+  swingTurn(60, "right", 1);
   /**pros::delay(100);
   driveStraight(40, 1, 75);
   pros::delay(100);
