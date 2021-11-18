@@ -16,3 +16,4 @@ pros::Controller partnerController(pros::E_CONTROLLER_PARTNER);
 
 //Sensors
 pros::Vision visionSensor(20, pros::E_VISION_ZERO_CENTER);
+pros::Imu inertialSensor(19);

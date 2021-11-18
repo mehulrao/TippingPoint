@@ -21,5 +21,6 @@ extern pros::Controller partnerController;
 
 //Sensors
 extern pros::Vision visionSensor;
+extern pros::Imu inertialSensor;
 
 #endif
