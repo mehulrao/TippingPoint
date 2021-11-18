@@ -22,10 +22,12 @@ void initialize()
 	driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	driveRightFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	driveRightBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-	mobileGoalFront.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-	mobileGoalBack.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+	mobileGoalLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+	mobileGoalRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 	driveRightCenter.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 	driveLeftCenter.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
+	inertialSensor.reset();
 }
 
 /**
@@ -84,6 +86,6 @@ void opcontrol()
 		driveControl();
 
     	frontMobileGoalOperatorControl ();
-    	mobileGoalLiftOperatorControl();
+    	backMobileGoalOperatorControl();
 	}
 }

@@ -9,5 +9,5 @@ void setBackMobileGoalLift(int value);
 //Lifter Functions
 void frontMobileGoalOperatorControl ();
 
-void mobileGoalLiftOperatorControl ();
+void backMobileGoalOperatorControl ();
 

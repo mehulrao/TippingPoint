@@ -3,42 +3,45 @@
 
 using namespace std;
 
-void setFrontMobileGoalLift(int value)
-{
-  mobileGoalFront = value;
-}
+bool backMobileGoalToggle = false;
+
 
 void setBackMobileGoalLift(int value)
 {
-  mobileGoalBack = value;
+  mobileGoalLeft = value;
+  mobileGoalRight = value;
 }
 
-void frontMobileGoalOperatorControl()
+void backMobileGoalOperatorControl()
 {
-  int mobileGoalValue;
-  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1))
-  {
-    mobileGoalValue = 63;
+  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+    backMobileGoalToggle = !backMobileGoalToggle;
+
+    backMobileGoalLeftPiston.set_value(backMobileGoalToggle);
+    backMobileGoalRightPiston.set_value(backMobileGoalToggle);
+    pros::delay(750);
   }
-  else if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2))
-  {
-    mobileGoalValue = -63;
-  }
-  else
-  {
-    mobileGoalValue = 0;
-  }
-  setFrontMobileGoalLift(mobileGoalValue);
 }
 
-void mobileGoalLiftOperatorControl (){
+void frontMobileGoalOperatorControl (){
   int liftValue;
-  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
     liftValue = 127;
-  } else if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
+  } else if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
     liftValue = -127;
   } else {
     liftValue = 0;
   }
   setBackMobileGoalLift(liftValue);
+  if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+    liftRightPiston.set_value(true);
+    liftMiddlePiston.set_value(true);
+    liftLeftPiston.set_value(true);
+
+    pros::delay(500);
+
+    liftRightPiston.set_value(false);
+    liftMiddlePiston.set_value(false);
+    liftLeftPiston.set_value(false);
+  }
 }
