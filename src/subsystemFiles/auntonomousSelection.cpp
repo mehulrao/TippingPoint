@@ -3,54 +3,46 @@
 
 using namespace std;
 
-lv_obj_t *homeScreen = lv_obj_create(NULL, NULL);
+//Screens
+lv_obj_t homeScreen;
+lv_obj_t positionScreen;
+lv_obj_t mogoScreen;
+lv_obj_t statisticsScreen;
 
-lv_obj_t *leftButton;
-lv_obj_t *rightButton;
+//Navigation Buttons
+lv_obj_t continueButton;
+lv_obj_t backButton;
 
-lv_obj_t *leftLabel;
-lv_obj_t *rightLabel;
+//Images
+lv_obj_t homeImage;
+lv_obj_t fieldImage;
 
-lv_obj_t *sideContainer;
-lv_obj_t *sideLabel;
-const char *side = "";
-std::string sideString = "";
+//Button Matixes
+lv_obj_t positionMatrix;
+lv_obj_t mobileGoalMatrix;
+
+//Buttons
+lv_obj_t platformButton;
+
+//Labels/Button Maps
+lv_obj_t continueLabel;
+lv_obj_t backLabel;
+const char * positionMatrixMap [] = {"Left", "Right", ""};
+const char * mobileGoalMatrixMap [] = {"Short", "Tall", "Both", "None", ""}
+
+void homeScreenFunction (){
+  //Creates Home Screen
+  homeScreen = lv_obj_create(NULL, NULL);
+
+  //Navigation Buttons
+    //Continue Button
+    continueButton = lv_btn_create(homeScreen, NULL);
+    lv_obj_set_pos(continueButton, 50, 50);
+    lv_obj_set_size(continueButton, 100, 50);
+
+}
 
 void autonSelect()
 {
-  lv_scr_load(homeScreen);
-
-  leftButton = lv_btn_create(homeScreen, NULL);
-  leftLabel = lv_label_create(leftButton, NULL);
-  lv_label_set_text(leftLabel, "LEFT");
-  lv_obj_set_size(leftButton, 25, 50);
-  lv_obj_set_pos(leftButton, 126, 50);
-  lv_btn_set_action(leftButton, LV_BTN_ACTION_CLICK, leftButtonPress);
-
-  rightButton = lv_btn_create(homeScreen, NULL);
-  rightLabel = lv_label_create(rightButton, NULL);
-  lv_label_set_text(rightLabel, "RIGHT");
-  lv_obj_set_size(rightButton, 25, 50);
-  lv_obj_set_pos(rightButton, 303, 50);
-  lv_btn_set_action(rightButton, LV_BTN_ACTION_CLICK, rightButtonPress);
-
-  sideContainer = lv_cont_create(homeScreen, NULL);
-  sideLabel = lv_label_create(sideContainer, NULL);
-  lv_obj_set_pos(sideContainer, 215, 80);
-}
-
-static lv_res_t leftButtonPress(lv_obj_t *btn)
-{
-  side = "left";
-  sideString = "left";
-  lv_label_set_text(sideLabel, side);
-  return LV_RES_OK;
-}
-
-static lv_res_t rightButtonPress(lv_obj_t *btn)
-{
-  side = "right";
-  sideString = "right";
-  lv_label_set_text(sideLabel, side);
-  return LV_RES_OK;
+  
 }
