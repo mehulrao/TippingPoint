@@ -22,5 +22,4 @@ pros::Imu inertialSensor(19);
 pros::ADIDigitalOut liftRightPiston(1);
 pros::ADIDigitalOut liftMiddlePiston(2);
 pros::ADIDigitalOut liftLeftPiston(3);
-pros::ADIDigitalOut backMobileGoalLeftPiston(4);
-pros::ADIDigitalOut backMobileGoalRightPiston(5);
+pros::ADIDigitalOut backMobileGoalPiston(4);

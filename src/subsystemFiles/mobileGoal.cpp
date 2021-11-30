@@ -35,14 +35,36 @@ void frontMobileGoalOperatorControl (){
   }
 }
 
-void backMobileGoalOperatorControl()
-{
+void backMobileGoalOperatorControl(){
   if (masterController.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
     backMobileGoalToggle = !backMobileGoalToggle;
 
-    backMobileGoalLeftPiston.set_value(backMobileGoalToggle);
-    backMobileGoalRightPiston.set_value(backMobileGoalToggle);
+    backMobileGoalPiston.set_value(backMobileGoalToggle);
     pros::delay(750);
   }
 }
 
+void backMobileGoalAuton (){
+  backMobileGoalToggle = !backMobileGoalToggle;
+
+  backMobileGoalPiston.set_value(backMobileGoalToggle);
+}
+
+void frontMobileGoalAuton (int position){
+  if (position == 1){
+    while (mobileGoalLeft.get_position() > 0){
+      setMobileGoalLift(-127);
+    }
+  } else if (position == 2){
+    while (mobileGoalLeft.get_position() > 125){
+      setMobileGoalLift(-127);
+    }
+    while (mobileGoalLeft.get_position() < 125){
+      setMobileGoalLift(127);
+    }
+  } else {
+    while (mobileGoalLeft.get_position() < 1125){
+      setMobileGoalLift(127);
+    }
+  }
+}

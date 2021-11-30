@@ -27,7 +27,6 @@ extern pros::Imu inertialSensor;
 extern pros::ADIDigitalOut liftRightPiston;
 extern pros::ADIDigitalOut liftMiddlePiston;
 extern pros::ADIDigitalOut liftLeftPiston;
-extern pros::ADIDigitalOut backMobileGoalLeftPiston;
-extern pros::ADIDigitalOut backMobileGoalRightPiston;
+extern pros::ADIDigitalOut backMobileGoalPiston;
 
 #endif
