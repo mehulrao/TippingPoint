@@ -26,6 +26,11 @@ double rightArc;
 double angleRads;
 double wheelTicks;
 
+double driveAngleInit;
+double driveDistance;
+double initTicks;
+double tickDifference;
+
 //Helper Functions
 void setDrive(int left, int right)
 {
@@ -122,18 +127,16 @@ void tareDrive()
           setDrive(-127,127);
         }
       }
+      tareDrive();
     }
 
     void driveStraight (double distance, int direction){
-      angleRads = inertialSensor.get_heading() * (PI / 180);
-      currentX += distance * cos(angleRads) * direction;
-      currentY += distance * sin(angleRads) * direction;
+      wheelTicks = (distance / CIRCUMFERANCE) * (3 / 5) * 900;
 
-      wheelTicks = (leftArc / CIRCUMFERANCE) * (3 / 5) * 900;
-
-      while (wheelTicks > ((driveLeftFront.get_position() + driveRightFront.get_position()) / 2)){
+      while (wheelTicks > (abs(driveLeftFront.get_position() + driveRightFront.get_position()) / 2)){
         setDrive(127 * direction, 127 * direction);
       }
+      tareDrive();
     }
 
     void swing (double angle){
@@ -151,3 +154,17 @@ void tareDrive()
     void stopDrive (){
       setDrive(0, 0);
     }
+
+void absolutePosition (){
+  while (true){
+    driveAngleInit = inertialSensor.get_heading();
+    initTicks = abs(driveLeftFront.get_position() + driveRightFront.get_position()) / 2;
+    while (inertialSensor.get_heading() == driveAngleInit){
+      pros::delay(10);
+    }
+    tickDifference = abs(driveLeftFront.get_position() + driveRightFront.get_position()) / 2 - initTicks;
+    driveDistance = (5 * CIRCUMFERANCE * (tickDifference)) / (900 * 3);
+    currentX = driveDistance * cos(driveAngleInit * PI / 180);
+    currentY = driveDistance * sin(driveAngleInit * PI / 180);
+  }
+}
